@@ -44,7 +44,7 @@ func getCells(t table.Writer, h string) {
 			continue
 		}
 		t.AppendRows([]table.Row{
-			{h, (*c).Subject.CommonName, (*c).NotBefore, (*c).NotAfter, (*c).Issuer.CommonName},
+			{h, (*c).Subject.CommonName, strings.Join((*c).DNSNames, "\n"), (*c).NotBefore, (*c).NotAfter, (*c).Issuer.CommonName},
 		})
 	}
 }
@@ -57,6 +57,7 @@ func prettyPrintCertsInfo(h string) {
 	t.AppendHeader(table.Row{
 		"Host",
 		"Common Name",
+		"DNS Names",
 		"Not Before",
 		"Not After",
 		"Issuer",
