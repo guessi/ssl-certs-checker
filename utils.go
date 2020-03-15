@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"net"
 	"os"
 	"strconv"
@@ -33,9 +34,10 @@ func getPeerCertificates(h string, port int) ([]*x509.Certificate, error) {
 	return conn.ConnectionState().PeerCertificates, nil
 }
 
-func getCells(t table.Writer, h string) {
-	certs, err := getPeerCertificates(h, 443)
+func getCells(t table.Writer, host string, port int) {
+	certs, err := getPeerCertificates(host, port)
 	if err != nil {
+		fmt.Printf("err: %s\n", err)
 		return // skip if target host invalid
 	}
 
@@ -43,9 +45,14 @@ func getCells(t table.Writer, h string) {
 		if c.IsCA {
 			continue
 		}
-		t.AppendRows([]table.Row{
-			{h, (*c).Subject.CommonName, strings.Join((*c).DNSNames, "\n"), (*c).NotBefore, (*c).NotAfter, (*c).Issuer.CommonName},
-		})
+		t.AppendRows([]table.Row{{
+			host + ":" + strconv.Itoa(port),
+			(*c).Subject.CommonName,
+			strings.Join((*c).DNSNames, "\n"),
+			(*c).NotBefore,
+			(*c).NotAfter,
+			(*c).Issuer.CommonName,
+		}})
 	}
 }
 
@@ -64,7 +71,18 @@ func prettyPrintCertsInfo(h string) {
 	})
 
 	for _, target := range targets {
-		getCells(t, target)
+		p := defaultPort
+		ts := strings.Split(target, ":")
+		if len(ts) == 2 {
+			tp, err := strconv.Atoi(ts[1])
+			if err != nil {
+				fmt.Printf("err: invalid port [%s], assume target port is 443\n", target)
+			} else {
+				p = tp
+			}
+		}
+
+		getCells(t, ts[0], p)
 	}
 
 	t.Style().Format.Header = text.FormatDefault
