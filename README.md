@@ -1,5 +1,8 @@
 # SSL certificate checker written in golang
 
+[![Docker Stars](https://img.shields.io/docker/stars/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
+[![Docker Automated](https://img.shields.io/docker/automated/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
 
 ## Setup Guide
 
@@ -7,21 +10,15 @@
 
 ## Examples
 
-install binary to your ${GOPATH}
+run with docker
+
+    docker build -t guessi/ssl-certs-checker .
+
+    docker run --rm -it guessi/ssl-certs-checker --hosts "www.google.com,www.azure.com,www.amazon.com"
+
+install binary to your ${GOPATH} and run locally
 
     go install github.com/ssl-certs-checker
-
-check single target host certificates infomation
-
-    ${GOPATH}/bin/ssl-certs-checker --hosts "www.google.com"
-
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+------------+
-    | Host               | Common Name    | DNS Names      | Not Before                    | Not After                     | Issuer     |
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+------------+
-    | www.google.com:443 | www.google.com | www.google.com | 2020-02-12 11:47:41 +0000 UTC | 2020-05-06 11:47:41 +0000 UTC | GTS CA 1O1 |
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+------------+
-
-check multiple target hosts' certificates at once
 
     ${GOPATH}/bin/ssl-certs-checker --hosts "www.google.com,www.azure.com,www.amazon.com"
 
@@ -48,12 +45,6 @@ check multiple target hosts' certificates at once
     |                    |                | p-yo-www-amazon-com-kalias.amazon.com |                               |                               |                       |
     |                    |                | p-y3-www-amazon-com-kalias.amazon.com |                               |                               |                       |
     +--------------------+----------------+---------------------------------------+-------------------------------+-------------------------------+-----------------------+
-
-run with docker
-
-    docker build -t ssl-certs-checker .
-
-    docker run --rm -it ssl-certs-checker --hosts "www.google.com"
 
 # License
 
