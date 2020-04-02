@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"os"
 	"strconv"
@@ -11,7 +12,29 @@ import (
 
 	"github.com/jedib0t/go-pretty/table"
 	"github.com/jedib0t/go-pretty/text"
+	"gopkg.in/yaml.v2"
 )
+
+type Config struct {
+	Hosts []string `yaml:"hosts"`
+}
+
+func readConfig(config string) Config {
+	c := Config{}
+
+	y, err := ioutil.ReadFile(config)
+	if err != nil {
+		fmt.Printf("fatal: %s\n", err)
+		os.Exit(1)
+	}
+
+	err = yaml.Unmarshal(y, &c)
+	if err != nil {
+		fmt.Printf("fatal: %s\n", err)
+		os.Exit(1)
+	}
+	return c
+}
 
 func getPeerCertificates(h string, port int) ([]*x509.Certificate, error) {
 	conn, err := tls.DialWithDialer(
@@ -56,8 +79,12 @@ func getCells(t table.Writer, host string, port int) {
 	}
 }
 
-func prettyPrintCertsInfo(h string) {
-	targets := strings.Split(h, ",")
+func prettyPrintCertsInfo(config string) {
+	rc := readConfig(config)
+	if len(rc.Hosts) <= 0 {
+		fmt.Printf("key not found, or empty input\n")
+		return
+	}
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
@@ -70,13 +97,13 @@ func prettyPrintCertsInfo(h string) {
 		"Issuer",
 	})
 
-	for _, target := range targets {
+	for _, target := range rc.Hosts {
 		p := defaultPort
 		ts := strings.Split(target, ":")
 		if len(ts) == 2 {
 			tp, err := strconv.Atoi(ts[1])
 			if err != nil {
-				fmt.Printf("err: invalid port [%s], assume target port is 443\n", target)
+				fmt.Errorf("err: invalid port [%s], assume target port is 443\n", target)
 			} else {
 				p = tp
 			}

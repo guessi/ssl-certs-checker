@@ -14,13 +14,13 @@ run with docker
 
     docker build -t guessi/ssl-certs-checker .
 
-    docker run --rm -it guessi/ssl-certs-checker --hosts "www.google.com,www.azure.com,www.amazon.com"
+    docker run --rm -v $(pwd)/hosts.yaml:/opt/hosts.yaml:ro -it guessi/ssl-certs-checker --config hosts.yaml
 
 install binary to your ${GOPATH} and run locally
 
     go install github.com/ssl-certs-checker
 
-    ${GOPATH}/bin/ssl-certs-checker --hosts "www.google.com,www.azure.com,www.amazon.com"
+    ${GOPATH}/bin/ssl-certs-checker --config hosts.yaml
 
     +--------------------+----------------+---------------------------------------+-------------------------------+-------------------------------+-----------------------+
     | Host               | Common Name    | DNS Names                             | Not Before                    | Not After                     | Issuer                |

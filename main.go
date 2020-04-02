@@ -12,15 +12,15 @@ func main() {
 		Usage: "check SSL certificates at once",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "hosts",
-				Aliases:  []string{"H"},
+				Name:     "config",
+				Aliases:  []string{"C"},
 				Value:    "",
-				Usage:    "target hosts, splits by comma",
+				Usage:    "config file",
 				Required: true,
 			},
 		},
 		Action: func(c *cli.Context) error {
-			prettyPrintCertsInfo(c.String("hosts"))
+			prettyPrintCertsInfo(c.String("config"))
 			return nil
 		},
 	}
