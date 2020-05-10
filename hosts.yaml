@@ -1,7 +1,6 @@
 hosts:
 - www.google.com
-- www.azure.com
-- www.amazon.com
-# - www.google.com:443
-# - www.azure.com:443
+# - www.azure.com
 # - www.amazon.com:443
+# - example.org
+# - example.com:443
