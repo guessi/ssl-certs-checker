@@ -1,9 +1,7 @@
 package main
 
-import "time"
-
 const (
-	dialerTimeout = 5 * time.Second
-	defaultPort   = 443
-	protocol      = "tcp"
+	defaultDialerTimeout = 5
+	defaultPort          = 443
+	protocol             = "tcp"
 )

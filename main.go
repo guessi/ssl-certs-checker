@@ -18,9 +18,16 @@ func main() {
 				Usage:    "config file",
 				Required: true,
 			},
+			&cli.IntFlag{
+				Name:     "timeout",
+				Aliases:  []string{"t"},
+				Value:    defaultDialerTimeout,
+				Usage:    "dialer timeout in second(s)",
+				Required: false,
+			},
 		},
 		Action: func(c *cli.Context) error {
-			prettyPrintCertsInfo(c.String("config"))
+			prettyPrintCertsInfo(c.String("config"), c.Int("timeout"))
 			return nil
 		},
 	}

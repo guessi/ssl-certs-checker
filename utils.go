@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/jedib0t/go-pretty/table"
 	"github.com/jedib0t/go-pretty/text"
@@ -37,10 +38,10 @@ func readConfig(config string) Config {
 	return c
 }
 
-func getPeerCertificates(h string, port int) ([]*x509.Certificate, error) {
+func getPeerCertificates(h string, port int, timeout int) ([]*x509.Certificate, error) {
 	conn, err := tls.DialWithDialer(
 		&net.Dialer{
-			Timeout: dialerTimeout,
+			Timeout: time.Duration(timeout) * time.Second,
 		},
 		protocol,
 		h+":"+strconv.Itoa(port),
@@ -58,9 +59,9 @@ func getPeerCertificates(h string, port int) ([]*x509.Certificate, error) {
 	return conn.ConnectionState().PeerCertificates, nil
 }
 
-func getCells(t table.Writer, host string, port int, wg *sync.WaitGroup) {
+func getCells(t table.Writer, host string, port, timeout int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	certs, err := getPeerCertificates(host, port)
+	certs, err := getPeerCertificates(host, port, timeout)
 	if err != nil {
 		fmt.Printf("err: %s\n", err)
 		return // skip if target host invalid
@@ -82,7 +83,7 @@ func getCells(t table.Writer, host string, port int, wg *sync.WaitGroup) {
 	}
 }
 
-func prettyPrintCertsInfo(config string) {
+func prettyPrintCertsInfo(config string, timeout int) {
 	rc := readConfig(config)
 	if len(rc.Hosts) <= 0 {
 		fmt.Printf("key not found, or empty input\n")
@@ -116,7 +117,7 @@ func prettyPrintCertsInfo(config string) {
 		}
 		wg.Add(1)
 
-		go getCells(t, ts[0], p, &wg)
+		go getCells(t, ts[0], p, timeout, &wg)
 	}
 	wg.Wait()
 
