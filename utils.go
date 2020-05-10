@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/jedib0t/go-pretty/table"
 	"github.com/jedib0t/go-pretty/text"
@@ -57,7 +58,8 @@ func getPeerCertificates(h string, port int) ([]*x509.Certificate, error) {
 	return conn.ConnectionState().PeerCertificates, nil
 }
 
-func getCells(t table.Writer, host string, port int) {
+func getCells(t table.Writer, host string, port int, wg *sync.WaitGroup) {
+	defer wg.Done()
 	certs, err := getPeerCertificates(host, port)
 	if err != nil {
 		fmt.Printf("err: %s\n", err)
@@ -99,6 +101,8 @@ func prettyPrintCertsInfo(config string) {
 		"Issuer",
 	})
 
+	var wg sync.WaitGroup
+
 	for _, target := range rc.Hosts {
 		p := defaultPort
 		ts := strings.Split(target, ":")
@@ -110,9 +114,11 @@ func prettyPrintCertsInfo(config string) {
 				p = tp
 			}
 		}
+		wg.Add(1)
 
-		getCells(t, ts[0], p)
+		go getCells(t, ts[0], p, &wg)
 	}
+	wg.Wait()
 
 	t.Style().Format.Header = text.FormatDefault
 	t.Render()
