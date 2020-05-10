@@ -74,6 +74,7 @@ func getCells(t table.Writer, host string, port int) {
 			strings.Join((*c).DNSNames, "\n"),
 			(*c).NotBefore,
 			(*c).NotAfter,
+			(*c).PublicKeyAlgorithm.String(),
 			(*c).Issuer.CommonName,
 		}})
 	}
@@ -94,6 +95,7 @@ func prettyPrintCertsInfo(config string) {
 		"DNS Names",
 		"Not Before",
 		"Not After",
+		"PublicKeyAlgorithm",
 		"Issuer",
 	})
 
