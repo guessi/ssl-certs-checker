@@ -3,7 +3,7 @@ package main
 import "time"
 
 const (
-	dialerTimeout = 10 * time.Second
+	dialerTimeout = 5 * time.Second
 	defaultPort   = 443
 	protocol      = "tcp"
 )
