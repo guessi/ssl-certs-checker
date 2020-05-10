@@ -1,10 +1,13 @@
 FROM golang:1.14-alpine3.11 AS builder
-RUN apk add --no-cache git
+LABEL maintainer="guessi <guessi@gmail.com>"
+RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/ssl-certs-checker
 COPY . .
-RUN go build -o /go/bin/ssl-certs-checker
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o /go/bin/ssl-certs-checker
 
-FROM alpine:3.11
+FROM scratch
+LABEL maintainer="guessi <guessi@gmail.com>"
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/bin/ssl-certs-checker /opt/
 WORKDIR /opt/
 ENTRYPOINT ["/opt/ssl-certs-checker"]
