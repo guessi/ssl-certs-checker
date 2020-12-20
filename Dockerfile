@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine3.12 AS builder
+FROM golang:1.15-alpine3.12 AS builder
 LABEL maintainer="guessi <guessi@gmail.com>"
 RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/ssl-certs-checker
