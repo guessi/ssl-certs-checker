@@ -1,6 +1,6 @@
 module github.com/guessi/ssl-certs-checker
 
-go 1.15
+go 1.16
 
 require (
 	github.com/go-openapi/strfmt v0.20.0 // indirect
