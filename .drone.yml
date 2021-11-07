@@ -1,0 +1,45 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: test
+  image: golang:1.17-alpine3.14
+  commands:
+  - go version
+  - go fmt ./...
+  # - go vet ./...
+
+- name: docker-build-dry-run
+  image: plugins/docker
+  settings:
+    repo: guessi/ssl-certs-checker
+    dry_run: true
+    auto_tag: true
+  when:
+    event:
+      include:
+      - pull_request
+
+- name: docker-build
+  image: plugins/docker
+  settings:
+    repo: guessi/ssl-certs-checker
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
+  when:
+    branch:
+    - master
+    event:
+      exclude:
+      - pull_request
+
+...
