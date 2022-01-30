@@ -9,7 +9,7 @@ platform:
 
 steps:
 - name: test
-  image: golang:1.17-alpine3.14
+  image: golang:1.17-alpine3.15
   commands:
   - go version
   - go fmt ./...
