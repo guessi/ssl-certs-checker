@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jedib0t/go-pretty/table"
-	"github.com/jedib0t/go-pretty/text"
+	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/jedib0t/go-pretty/v6/text"
 	"gopkg.in/yaml.v2"
 )
 
