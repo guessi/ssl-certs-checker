@@ -1,12 +1,10 @@
-FROM golang:1.17-alpine3.15 AS builder
-LABEL maintainer="guessi <guessi@gmail.com>"
+FROM public.ecr.aws/docker/library/golang:1.18-alpine3.15 AS builder
 RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/ssl-certs-checker
-COPY . .
+COPY *.go go.mod go.sum ./
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o /go/bin/ssl-certs-checker
 
 FROM scratch
-LABEL maintainer="guessi <guessi@gmail.com>"
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/bin/ssl-certs-checker /opt/
 WORKDIR /opt/

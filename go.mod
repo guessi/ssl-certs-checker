@@ -1,9 +1,9 @@
 module github.com/guessi/ssl-certs-checker
 
-go 1.17
+go 1.18
 
 require (
-	github.com/jedib0t/go-pretty/v6 v6.2.7
+	github.com/jedib0t/go-pretty/v6 v6.3.0
 	github.com/urfave/cli/v2 v2.4.0
 	gopkg.in/yaml.v2 v2.4.0
 )

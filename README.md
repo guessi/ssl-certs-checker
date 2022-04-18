@@ -33,20 +33,8 @@
     +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+------------+
     | Host               | Common Name    | DNS Names      | Not Before                    | Not After                     | PublicKeyAlgorithm | Issuer     |
     +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+------------+
-    | www.google.com:443 | www.google.com | www.google.com | 2022-02-28 03:35:56 +0000 UTC | 2022-05-23 03:35:55 +0000 UTC | ECDSA              | GTS CA 1C3 |
+    | www.google.com:443 | www.google.com | www.google.com | 2022-03-28 02:26:07 +0000 UTC | 2022-06-20 02:26:06 +0000 UTC | ECDSA              | GTS CA 1C3 |
     +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+------------+
-
-## Build from Source
-
-    go get -u github.com/guessi/ssl-certs-checker
-
-    cd ${GOPATH}/src/github.com/guessi/ssl-certs-checker
-
-    vim ... # made some changes
-
-    go install github.com/guessi/ssl-certs-checker
-
-    ssl-certs-checker --help
 
 # License
 

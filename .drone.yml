@@ -9,7 +9,7 @@ platform:
 
 steps:
 - name: test
-  image: golang:1.17-alpine3.15
+  image: public.ecr.aws/docker/library/golang:1.18-alpine3.15
   commands:
   - go version
   - go fmt ./...

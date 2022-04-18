@@ -4,5 +4,6 @@
 
 .git
 .github
+.gitignore
 vendor/
 Dockerfile
