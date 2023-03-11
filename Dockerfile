@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/golang:1.19-alpine3.17 AS builder
+FROM public.ecr.aws/docker/library/golang:1.20-alpine3.17 AS builder
 RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/ssl-certs-checker
 COPY *.go go.mod go.sum ./
