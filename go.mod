@@ -1,8 +1,8 @@
 module github.com/guessi/ssl-certs-checker
 
-go 1.22.0
+go 1.23.0
 
-toolchain go1.22.5
+toolchain go1.23.4
 
 require (
 	github.com/jedib0t/go-pretty/v6 v6.5.9
