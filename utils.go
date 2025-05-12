@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"net"
 	"os"
 	"strconv"
@@ -24,7 +23,7 @@ type Config struct {
 func readConfig(config string) Config {
 	c := Config{}
 
-	y, err := ioutil.ReadFile(config)
+	y, err := os.ReadFile(config)
 	if err != nil {
 		fmt.Printf("fatal: %s\n", err)
 		os.Exit(1)
