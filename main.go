@@ -1,13 +1,14 @@
 package main
 
 import (
+	"context"
 	"os"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 func main() {
-	app := &cli.App{
+	app := &cli.Command{
 		Name:  "SSL Certificate Checker",
 		Usage: "check SSL certificates at once",
 		Flags: []cli.Flag{
@@ -26,13 +27,13 @@ func main() {
 				Required: false,
 			},
 		},
-		Action: func(c *cli.Context) error {
+		Action: func(ctx context.Context, c *cli.Command) error {
 			prettyPrintCertsInfo(c.String("config"), c.Int("timeout"))
 			return nil
 		},
 	}
 
-	err := app.Run(os.Args)
+	err := app.Run(context.Background(), os.Args)
 	if err != nil {
 		os.Exit(1)
 	}
