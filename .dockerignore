@@ -7,3 +7,6 @@
 .gitignore
 vendor/
 Dockerfile
+
+ssl-certs-checker
+*.exe

@@ -8,6 +8,8 @@ RUN apt update && apt install -y git ca-certificates
 WORKDIR /app
 
 COPY *.go go.mod go.sum ./
+COPY pkg ./pkg
+
 RUN GOPROXY=direct GOOS=${TARGETOS} GOARCH=${TARGETARCH} CGO_ENABLED=0 go build -o /go/bin/ssl-certs-checker
 
 FROM scratch

@@ -1,6 +1,2 @@
 hosts:
-- www.google.com
-# - www.azure.com
-# - www.amazon.com:443
-# - example.org
-# - example.com:443
+- github.com

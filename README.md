@@ -1,4 +1,4 @@
-# SSL certificate checker written in golang
+# SSL Certificate Checker
 
 [![GoDoc](https://godoc.org/github.com/guessi/ssl-certs-checker?status.svg)](https://godoc.org/github.com/guessi/ssl-certs-checker)
 [![Go Report Card](https://goreportcard.com/badge/github.com/guessi/ssl-certs-checker)](https://goreportcard.com/report/github.com/guessi/ssl-certs-checker)
@@ -7,34 +7,30 @@
 [![Docker Stars](https://img.shields.io/docker/stars/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
 
+A robust, concurrent SSL certificate checker written in Go.
+
 ## Usage
 
-    docker run --rm -v $(pwd)/hosts.yaml:/opt/hosts.yaml:ro -it guessi/ssl-certs-checker --help
+### Command Line Options
 
-    NAME:
-       SSL Certificate Checker - check SSL certificates at once
-
-    USAGE:
-       ssl-certs-checker [global options] command [command options] [arguments...]
-
-    COMMANDS:
-       help, h  Shows a list of commands or help for one command
-
-    GLOBAL OPTIONS:
-       --config value, -C value   config file
-       --timeout value, -t value  dialer timeout in second(s) (default: 5)
-       --help, -h                 show help (default: false)
-
+```bash
+docker run --rm -it guessi/ssl-certs-checker --help
+```
 
 ## Sample Output
 
-    docker run --rm -v $(pwd)/hosts.yaml:/opt/hosts.yaml:ro -it guessi/ssl-certs-checker --config hosts.yaml
+```bash
+docker run --rm -it guessi/ssl-certs-checker --domains "github.com"
+```
 
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+--------+
-    | Host               | Common Name    | DNS Names      | Not Before                    | Not After                     | PublicKeyAlgorithm | Issuer |
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+--------+
-    | www.google.com:443 | www.google.com | www.google.com | 2025-04-21 08:42:35 +0000 UTC | 2025-07-14 08:42:34 +0000 UTC | ECDSA              | WR2    |
-    +--------------------+----------------+----------------+-------------------------------+-------------------------------+--------------------+--------+
+```bash
++----------------+-------------+----------------+-------------------------------+-------------------------------+--------------------+------------------------------------------------+
+| Host           | Common Name | DNS Names      | Not Before                    | Not After                     | PublicKeyAlgorithm | Issuer                                         |
++----------------+-------------+----------------+-------------------------------+-------------------------------+--------------------+------------------------------------------------+
+| github.com:443 | github.com  | github.com     | 2025-02-05 00:00:00 +0000 UTC | 2026-02-05 23:59:59 +0000 UTC | ECDSA              | Sectigo ECC Domain Validation Secure Server CA |
+|                |             | www.github.com |                               |                               |                    |                                                |
++----------------+-------------+----------------+-------------------------------+-------------------------------+--------------------+------------------------------------------------+
+```
 
 # License
 
