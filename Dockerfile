@@ -1,10 +1,12 @@
-FROM public.ecr.aws/docker/library/golang:1.24-alpine3.22 AS builder
+FROM public.ecr.aws/docker/library/golang:1.24-bookworm AS builder
 
 ARG TARGETOS
 ARG TARGETARCH
 
-RUN apk add --no-cache git ca-certificates
-WORKDIR ${GOPATH}/src/github.com/guessi/ssl-certs-checker
+RUN apt update && apt install -y git ca-certificates
+
+WORKDIR /app
+
 COPY *.go go.mod go.sum ./
 RUN GOPROXY=direct GOOS=${TARGETOS} GOARCH=${TARGETARCH} CGO_ENABLED=0 go build -o /go/bin/ssl-certs-checker
 
