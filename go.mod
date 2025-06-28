@@ -7,7 +7,7 @@ toolchain go1.24.4
 require (
 	github.com/jedib0t/go-pretty/v6 v6.6.7
 	github.com/urfave/cli/v3 v3.3.8
-	gopkg.in/yaml.v3 v3.0.1
+	go.yaml.in/yaml/v3 v3.0.3
 )
 
 require (
