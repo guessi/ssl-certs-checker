@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/golang:1.24-bookworm AS builder
+FROM public.ecr.aws/docker/library/golang:1.25-bookworm AS builder
 
 ARG TARGETOS
 ARG TARGETARCH
