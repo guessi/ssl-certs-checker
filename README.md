@@ -1,7 +1,6 @@
 # SSL Certificate Checker
 
 [![GoDoc](https://godoc.org/github.com/guessi/ssl-certs-checker?status.svg)](https://godoc.org/github.com/guessi/ssl-certs-checker)
-[![Go Report Card](https://goreportcard.com/badge/github.com/guessi/ssl-certs-checker)](https://goreportcard.com/report/github.com/guessi/ssl-certs-checker)
 [![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/guessi/ssl-certs-checker)](https://github.com/guessi/ssl-certs-checker/blob/master/go.mod)
 
 [![Docker Stars](https://img.shields.io/docker/stars/guessi/ssl-certs-checker.svg)](https://hub.docker.com/r/guessi/ssl-certs-checker/)
